@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" copetepet="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>My Notebook</title>
+</head>
+<body>
+<header>
+    <h1>My PetStore</h1>
+</header>
+<div class="copetainer">
+
+    <form id="note-form" th:action="@{'/add/pet'}" method="post" >
+        <input type="text" id="pet-name" placeholder="Name" name="name" >
+        <input type="number" id="pet-price" placeholder="Price" name="price" >
+        <input type="number" id="pet-weight" placeholder="Weight in gramms" name="weight">
+        <input type="text" id="pet-description" placeholder="Write description of new pet" name="description">
+        <button type="submit" id="btnadd">Add Pet</button>
+    </form>
+
+    <br>
+
+    <div th:each="pet : ${petsList}">
+        <ul id="pet-list">
+            <input type="hidden" name="id" th:value="${pet.id}">
+            <a th:href="@{'/pet/'+${pet.id}}">
+                <h3 th:text="${pet.name}"></h3>
+            </a>
+            <h3 th:text="${pet.weight}"></h3>
+            <h3 th:text="${pet.definition}"></h3>
+            <p th:text="${pet.price}"></p>
+
+            <form th:action="@{'/delete/pet'}" method="post" class="pet-actions">
+                <input type="hidden" name="id" th:value="${pet.id}">
+                <button type="submit" id="btndel" style="background-color: #d9534f">Delete</button>
+                <button type="submit" id="btnchange" style="background-color: forestgreen"><a th:href="@{'/update/pet/' + ${pet.id}}">Change</a></button>
+            </form>
+
+        </ul>
+        <br>
+    </div>
+</div>
+</body>
+</html>
